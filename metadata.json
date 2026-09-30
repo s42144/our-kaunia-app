@@ -1,0 +1,6 @@
+{
+  "name": "আমাদের কাউনিয়া",
+  "description": "রংপুর জেলার কাউনিয়া উপজেলার সমন্বিত ডিজিটাল সেবা ও তথ্য প্ল্যাটফর্ম",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

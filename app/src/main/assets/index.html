@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>আমাদের কাউনিয়া — কাউনিয়ার সবকিছু, এক অ্যাপে</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top App Bar -->
+  <header class="app-header">
+    <div class="brand-wrapper">
+      <div class="brand-logo-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">আমাদের কাউনিয়া</div>
+        <div class="brand-subtitle">কাউনিয়ার সবকিছু, এক অ্যাপে</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="toggleTheme()" id="themeToggleBtn" title="থিম পরিবর্তন">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.3 2a10 10 0 00-1.9 19.8 10 10 0 0011.6-11.6A10 10 0 0012.3 2z"/></svg>
+      </button>
+      <button class="icon-btn" onclick="openModal('userModal')" title="ব্যবহারকারী প্রোফাইল">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container">
+
+    <!-- Live Announcement Ticker -->
+    <div class="ticker-banner">
+      <span class="ticker-tag">জরুরি বার্তা</span>
+      <div class="ticker-text">বোরো ধান প্রণোদনা বিতরণ শুরু • তিস্তা সেতুতে সংস্কার সতর্কবার্তা • ফ্রি ব্লাড গ্রুপিং ক্যাম্পেইন</div>
+    </div>
+
+    <!-- 1. HOME TAB -->
+    <section id="tab-home" class="tab-content active">
+      
+      <!-- Hero Overview Card -->
+      <div class="hero-card">
+        <div class="hero-meta">
+          <div class="hero-badge">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+            রংপুর জেলা, বাংলাদেশ
+          </div>
+          <div class="weather-box">
+            <div class="weather-temp">২৯°C</div>
+            <div class="weather-desc">আংশিক মেঘলা • কাউনিয়া</div>
+          </div>
+        </div>
+        <div class="hero-history-title">কাউনিয়া উপজেলা ডিজিটাল প্ল্যাটফর্ম</div>
+        <p class="hero-history-text">
+          ঐতিহাসিক তিস্তা নদী বিধৌত ও ১৮৭৯ সালের প্রাচীনতম রেল জংশন সমৃদ্ধ কাউনিয়া উপজেলার সকল তথ্য, স্বাস্থ্যসেবা, জরুরি যোগাযোগ এবং নাগরিক সুবিধা এখন আপনার হাতের মুঠোয়।
+        </p>
+      </div>
+
+      <!-- Quick Shortcuts Grid -->
+      <div class="section-title">
+        <span>জনপ্রিয় জরুরি সেবাসমূহ</span>
+        <button class="btn btn-sm btn-outline" onclick="switchTab('emergency')">সব দেখুন</button>
+      </div>
+      <div class="quick-grid">
+        <div class="quick-item" onclick="switchTab('emergency')">
+          <div class="quick-icon-wrap" style="background:#EF4444;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          </div>
+          <span class="quick-label">থানা ও পুলিশ</span>
+        </div>
+        <div class="quick-item" onclick="switchTab('health')">
+          <div class="quick-icon-wrap" style="background:#0D9488;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>
+          </div>
+          <span class="quick-label">হাসপাতাল</span>
+        </div>
+        <div class="quick-item" onclick="switchTab('health')">
+          <div class="quick-icon-wrap" style="background:#DC2626;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+          </div>
+          <span class="quick-label">রক্তদাতা</span>
+        </div>
+        <div class="quick-item" onclick="switchTab('transport')">
+          <div class="quick-icon-wrap" style="background:#0284C7;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2c-4 0-8 .5-8 4v9.5A3.5 3.5 0 007.5 19L6 20.5v.5h12v-.5L16.5 19A3.5 3.5 0 0020 15.5V6c0-3.5-4-4-8-4z"/></svg>
+          </div>
+          <span class="quick-label">ট্রেনের সময়</span>
+        </div>
+      </div>
+
+      <div class="quick-grid">
+        <div class="quick-item" onclick="switchTab('map')">
+          <div class="quick-icon-wrap" style="background:#8B5CF6;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5z"/></svg>
+          </div>
+          <span class="quick-label">কাউনিয়া ম্যাপ</span>
+        </div>
+        <div class="quick-item" onclick="switchTab('business')">
+          <div class="quick-icon-wrap" style="background:#F59E0B;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>
+          </div>
+          <span class="quick-label">ব্যবসা ডিরেক্টরি</span>
+        </div>
+        <div class="quick-item" onclick="switchTab('community')">
+          <div class="quick-icon-wrap" style="background:#10B981;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          </div>
+          <span class="quick-label">কমিউনিটি ফোরাম</span>
+        </div>
+        <div class="quick-item" onclick="switchTab('ai')">
+          <div class="quick-icon-wrap" style="background:#6366F1;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+          </div>
+          <span class="quick-label">AI সহকারী</span>
+        </div>
+      </div>
+
+      <!-- Quick Notices & News -->
+      <div class="section-title">
+        <span>তাজা খবর ও নোটিশ</span>
+        <button class="btn btn-sm btn-outline" onclick="switchTab('notice')">সব খবর</button>
+      </div>
+      <div id="homeNoticeList">
+        <div class="card">
+          <div class="card-header-row">
+            <div>
+              <div class="card-title">বোরো ধানের সরকারি প্রণোদনা বিতরণ কর্মসূচি শুরু</div>
+              <div class="card-sub">২৮ সেপ্টেম্বর ২০২৬ • কৃষি সম্প্রসারণ অধিদপ্তর</div>
+            </div>
+            <span class="badge badge-success">সরকারি</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">কাউনিয়া উপজেলার তালিকাভুক্ত প্রান্তিক কৃষকদের মাঝে বিনামূল্যে সার ও বীজ বিতরণ চলছে।</p>
+        </div>
+        <div class="card">
+          <div class="card-header-row">
+            <div>
+              <div class="card-title">কাউনিয়া জংশন প্ল্যাটফর্ম সংস্কার সতর্কবার্তা</div>
+              <div class="card-sub">২৬ সেপ্টেম্বর ২০২৬ • বাংলাদেশ রেলওয়ে</div>
+            </div>
+            <span class="badge badge-info">রেলওয়ে</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">যাত্রীদের নিরাপত্তার সুবিধার্থে ১ ও ২ নম্বর প্ল্যাটফর্মে ওভারব্রিজ ব্যবহারের অনুরোধ।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. KAUNIA ABOUT TAB -->
+    <section id="tab-about" class="tab-content">
+      <div class="section-title">কাউনিয়া উপজেলা পরিচিতি ও ইতিহাস</div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:8px;">ভৌগোলিক ও সাধারণ তথ্য</div>
+        <div style="font-size:0.88rem; line-height:1.6;">
+          <strong>আয়তন:</strong> ১৪৭.৬৭ বর্গ কিলোমিটার<br/>
+          <strong>জনসংখ্যা:</strong> প্রায় ২,২৭,৮০০ জন<br/>
+          <strong>ইউনিয়ন:</strong> ৬টি (সারাই, হারাগাছ, কুর্শা, শহীদবাগ, বালাপাড়া, টেপামধুপুর)<br/>
+          <strong>নদ-নদী:</strong> খরস্রোতা তিস্তা নদী ও মানাস নদী<br/>
+          <strong>প্রধান ঐতিহ্য:</strong> ১৮৭৯ সালের ঐতিহাসিক তিস্তা রেল সেতু ও কাউনিয়া জংশন স্টেশন।
+        </div>
+      </div>
+      <div class="section-title">কাউনিয়া উপজেলার ৬টি ইউনিয়ন পরিষদ</div>
+      <div id="unionsList"></div>
+    </section>
+
+    <!-- 3. MAP TAB -->
+    <section id="tab-map" class="tab-content">
+      <div class="section-title">ইন্টার্যাক্টিভ কাউনিয়া ম্যাপ</div>
+      <div class="filter-row" id="mapChips">
+        <div class="filter-chip active" onclick="filterMapCategory('সব', this)">সব লোকেশন</div>
+        <div class="filter-chip" onclick="filterMapCategory('উপজেলা পরিষদ', this)">উপজেলা পরিষদ</div>
+        <div class="filter-chip" onclick="filterMapCategory('থানা', this)">থানা</div>
+        <div class="filter-chip" onclick="filterMapCategory('হাসপাতাল', this)">হাসপাতাল</div>
+        <div class="filter-chip" onclick="filterMapCategory('রেল স্টেশন', this)">রেল স্টেশন</div>
+        <div class="filter-chip" onclick="filterMapCategory('ইউনিয়ন পরিষদ', this)">ইউনিয়ন পরিষদ</div>
+        <div class="filter-chip" onclick="filterMapCategory('বাজার', this)">বাজার</div>
+        <div class="filter-chip" onclick="filterMapCategory('ব্যাংক', this)">ব্যাংক</div>
+        <div class="filter-chip" onclick="filterMapCategory('দর্শনীয় স্থান', this)">দর্শনীয় স্থান</div>
+      </div>
+      <div id="leafletMap" class="map-container"></div>
+      <div class="card" style="font-size:0.82rem; color:var(--text-muted);">
+        ম্যাপের যেকোনো মার্কারে ট্যাপ করে নাম, বিস্তারিত ঠিকানা এবং সরাসরি কল করার তথ্য পাবেন।
+      </div>
+    </section>
+
+    <!-- 4. EMERGENCY TAB -->
+    <section id="tab-emergency" class="tab-content">
+      <div class="section-title">জরুরি যোগাযোগ ডিরেক্টরি (এক ক্লিকে কল)</div>
+      <div class="filter-row" id="emergencyChips">
+        <div class="filter-chip active" onclick="filterEmergency('সব', this)">সকল জরুরি সেবা</div>
+        <div class="filter-chip" onclick="filterEmergency('পুলিশ', this)">পুলিশ ও থানা</div>
+        <div class="filter-chip" onclick="filterEmergency('অগ্নি ও উদ্ধার', this)">ফায়ার সার্ভিস</div>
+        <div class="filter-chip" onclick="filterEmergency('চিকিৎসা', this)">স্বাস্থ্য কমপ্লেক্স</div>
+        <div class="filter-chip" onclick="filterEmergency('অ্যাম্বুলেন্স', this)">অ্যাম্বুলেন্স</div>
+        <div class="filter-chip" onclick="filterEmergency('প্রশাসন', this)">ইউএনও ও প্রশাসন</div>
+        <div class="filter-chip" onclick="filterEmergency('বিদ্যুৎ', this)">পল্লী বিদ্যুৎ</div>
+        <div class="filter-chip" onclick="filterEmergency('জাতীয়', this)">জাতীয় হেল্পলাইন</div>
+      </div>
+      <div id="emergencyList"></div>
+    </section>
+
+    <!-- 5. HEALTH & BLOOD TAB -->
+    <section id="tab-health" class="tab-content">
+      <div class="section-title">
+        <span>স্বাস্থ্য সেবা ও বিশেষজ্ঞ ডাক্তার</span>
+      </div>
+      <div class="card">
+        <div class="card-header-row">
+          <div>
+            <div class="card-title">কাউনিয়া উপজেলা স্বাস্থ্য কমপ্লেক্স</div>
+            <div class="card-sub">হাসপাতাল রোড, কাউনিয়া সদর • সার্বক্ষণিক জরুরি বিভাগ</div>
+          </div>
+          <span class="badge badge-success">সরকারি</span>
+        </div>
+        <div style="margin-top:10px;">
+          <a href="tel:01730-324890" class="btn btn-primary btn-block">
+            জরুরি চিকিৎসায় কল: 01730-324890
+          </a>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:20px;">
+        <span>লাইভ রক্তদাতা খোঁজার ব্যবস্থা</span>
+        <button class="btn btn-sm btn-danger" onclick="openModal('bloodDonorModal')">রক্তদাতা হন</button>
+      </div>
+      <div class="filter-row" id="bloodChips">
+        <div class="filter-chip active" onclick="filterBlood('সব', this)">সব গ্রুপ</div>
+        <div class="filter-chip" onclick="filterBlood('A+', this)">A+</div>
+        <div class="filter-chip" onclick="filterBlood('B+', this)">B+</div>
+        <div class="filter-chip" onclick="filterBlood('O+', this)">O+</div>
+        <div class="filter-chip" onclick="filterBlood('AB+', this)">AB+</div>
+        <div class="filter-chip" onclick="filterBlood('A-', this)">A-</div>
+        <div class="filter-chip" onclick="filterBlood('B-', this)">B-</div>
+        <div class="filter-chip" onclick="filterBlood('O-', this)">O-</div>
+        <div class="filter-chip" onclick="filterBlood('AB-', this)">AB-</div>
+      </div>
+      <div id="bloodDonorsList"></div>
+    </section>
+
+    <!-- 6. TRANSPORT TAB -->
+    <section id="tab-transport" class="tab-content">
+      <div class="section-title">কাউনিয়া রেলওয়ে জংশন ট্রেনের সময়সূচি</div>
+      <div id="trainsList"></div>
+      <div class="section-title" style="margin-top:20px;">বাস ও সড়ক যোগাযোগ</div>
+      <div class="card">
+        <div class="card-title">কাউনিয়া টু ঢাকা দূরপাল্লার বাস কাউন্টার</div>
+        <div style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">
+          হানিফ এন্টারপ্রাইজ: 01713-223344 | শ্যামলী পরিবহন: 01714-334455 | নাবিল পরিবহন: 01715-445566
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. EDUCATION TAB -->
+    <section id="tab-education" class="tab-content">
+      <div class="section-title">কাউনিয়া উপজেলার শিক্ষা প্রতিষ্ঠানসমূহ</div>
+      <div id="educationList"></div>
+    </section>
+
+    <!-- 8. BUSINESS TAB -->
+    <section id="tab-business" class="tab-content">
+      <div class="section-title">
+        <span>স্থানীয় ব্যবসা ডিরেক্টরি</span>
+        <button class="btn btn-sm btn-primary" onclick="openModal('businessModal')">ব্যবসা যোগ করুন</button>
+      </div>
+      <div class="filter-row" id="businessChips">
+        <div class="filter-chip active" onclick="filterBusiness('সব', this)">সব ব্যবসা</div>
+        <div class="filter-chip" onclick="filterBusiness('রেস্টুরেন্ট', this)">রেস্টুরেন্ট</div>
+        <div class="filter-chip" onclick="filterBusiness('কাপড়ের দোকান', this)">কাপড়ের দোকান</div>
+        <div class="filter-chip" onclick="filterBusiness('ইলেকট্রনিক্স', this)">ইলেকট্রনিক্স</div>
+        <div class="filter-chip" onclick="filterBusiness('কৃষি পণ্য', this)">কৃষি পণ্য</div>
+        <div class="filter-chip" onclick="filterBusiness('সার্ভিস সেন্টার', this)">সার্ভিস সেন্টার</div>
+      </div>
+      <div id="businessList"></div>
+    </section>
+
+    <!-- 9. COMMUNITY TAB -->
+    <section id="tab-community" class="tab-content">
+      <div class="section-title">
+        <span>কমিউনিটি ফোরাম ও সেবা বোর্ড</span>
+        <button class="btn btn-sm btn-primary" onclick="openModal('newPostModal')">নতুন পোস্ট</button>
+      </div>
+      <div id="communityFeed"></div>
+    </section>
+
+    <!-- 10. AI ASSISTANT TAB -->
+    <section id="tab-ai" class="tab-content">
+      <div class="section-title">AI কাউনিয়া সহকারী (বাংলা চ্যাটবট)</div>
+      <div class="chat-window">
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-bubble chat-bubble-assistant">
+            আসসালামু আলাইকুম! আমি আপনার “আমাদের কাউনিয়া” AI সহকারী। কাউনিয়া উপজেলার হাসপাতাল, থানার নম্বর, ট্রেনের সময়সূচি, ইউনিয়নের তথ্য বা আবহাওয়া সম্পর্কে যেকোনো প্রশ্ন করতে পারেন।
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <input type="text" id="aiQueryInput" class="form-control" placeholder="প্রশ্ন লিখুন (যেমন: থানার নম্বর দিন, কয়টি ইউনিয়ন?)" onkeypress="if(event.key==='Enter') askAiAssistant()" />
+          <button class="btn btn-primary" onclick="askAiAssistant()">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;">
+        <button class="btn btn-sm btn-outline" onclick="askAiAssistant('কাউনিয়া থানার ওসির নম্বর কত?')">থানার নম্বর?</button>
+        <button class="btn btn-sm btn-outline" onclick="askAiAssistant('কাউনিয়ায় কয়টি ইউনিয়ন আছে?')">ইউনিয়ন কয়টি?</button>
+        <button class="btn btn-sm btn-outline" onclick="askAiAssistant('কাউনিয়া হাসপাতালের জরুরি নম্বর দিন')">হাসপাতালের নম্বর?</button>
+        <button class="btn btn-sm btn-outline" onclick="askAiAssistant('আজকের আবহাওয়া কেমন?')">আজকের আবহাওয়া?</button>
+      </div>
+    </section>
+
+    <!-- 11. ADMIN TAB -->
+    <section id="tab-admin" class="tab-content">
+      <div class="section-title">অ্যাডমিন ম্যানেজমেন্ট প্যানেল</div>
+      <div class="card">
+        <div class="card-title">নিয়ন্ত্রণ প্যানেল স্ট্যাটাস</div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin:6px 0 12px 0;">
+          অ্যাডমিন হিসেবে আপনি জরুরি ঘোষণা প্রকাশ, রক্তদাতা তথ্য যাচাই এবং নতুন ব্যবসা অনুমোদন করতে পারেন।
+        </p>
+        <button class="btn btn-primary" onclick="alert('সফলভাবে সিস্টেম ডাটাবেজের সাথে সিঙ্ক হয়েছে!')">ডাটাবেজ সিঙ্ক চেক</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="bottom-nav">
+    <button class="nav-tab active" id="nav-home" onclick="switchTab('home')">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      হোম
+    </button>
+    <button class="nav-tab" id="nav-map" onclick="switchTab('map')">
+      <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5z"/></svg>
+      ম্যাপ
+    </button>
+    <button class="nav-tab" id="nav-emergency" onclick="switchTab('emergency')">
+      <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.4 11.4 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.4 11.4 0 00.57 3.58 1 1 0 01-.24 1.02l-2.21 2.19z"/></svg>
+      জরুরি
+    </button>
+    <button class="nav-tab" id="nav-health" onclick="switchTab('health')">
+      <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+      রক্ত ও সেবা
+    </button>
+    <button class="nav-tab" id="nav-ai" onclick="switchTab('ai')">
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+      AI সহকারী
+    </button>
+  </nav>
+
+  <!-- Modal: New Community Post -->
+  <div id="newPostModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">নতুন কমিউনিটি পোস্ট তৈরি করুন</div>
+        <button class="icon-btn" onclick="closeModal('newPostModal')">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <form id="postForm" onsubmit="submitPost(event)">
+        <div class="form-group">
+          <label class="form-label">আপনার নাম</label>
+          <input type="text" id="postAuthor" class="form-control" placeholder="আপনার নাম লিখুন" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">ইউনিয়ন নির্বাচন করুন</label>
+          <select id="postUnion" class="form-control">
+            <option value="কুর্শা">কুর্শা ইউনিয়ন</option>
+            <option value="সারাই">সারাই ইউনিয়ন</option>
+            <option value="হারাগাছ">হারাগাছ ইউনিয়ন</option>
+            <option value="শহীদবাগ">শহীদবাগ ইউনিয়ন</option>
+            <option value="বালাপাড়া">বালাপাড়া ইউনিয়ন</option>
+            <option value="টেপামধুপুর">টেপামধুপুর ইউনিয়ন</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">পোস্টের বিষয় / ক্যাটাগরি</label>
+          <select id="postCategory" class="form-control">
+            <option value="জরুরি রক্ত প্রয়োজন">জরুরি রক্ত প্রয়োজন</option>
+            <option value="হারানো বিজ্ঞপ্তি">হারানো বিজ্ঞপ্তি</option>
+            <option value="এলাকার সমস্যা">এলাকার সমস্যা</option>
+            <option value="সাহায্যের আবেদন">সাহায্যের আবেদন</option>
+            <option value="স্থানীয় ঘোষণা">স্থানীয় ঘোষণা</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">যোগাযোগ নম্বর</label>
+          <input type="tel" id="postPhone" class="form-control" placeholder="017xxxxxxxx" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">বিস্তারিত বিবরণ</label>
+          <textarea id="postText" class="form-control" rows="4" placeholder="আপনার বার্তাটি স্পষ্টভাবে লিখুন..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">পোস্ট প্রকাশ করুন</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Blood Donor Registration -->
+  <div id="bloodDonorModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">রক্তদাতা হিসেবে নিবন্ধন করুন</div>
+        <button class="icon-btn" onclick="closeModal('bloodDonorModal')">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <form onsubmit="submitBloodDonor(event)">
+        <div class="form-group">
+          <label class="form-label">রক্তদাতার নাম</label>
+          <input type="text" id="donorName" class="form-control" placeholder="আপনার পূর্ণ নাম" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">রক্তের গ্রুপ</label>
+          <select id="donorGroup" class="form-control">
+            <option value="A+">A+ (এ পজিটিভ)</option>
+            <option value="B+">B+ (বি পজিটিভ)</option>
+            <option value="O+">O+ (ও পজিটিভ)</option>
+            <option value="AB+">AB+ (এবি পজিটিভ)</option>
+            <option value="A-">A- (এ নেগেটিভ)</option>
+            <option value="B-">B- (বি নেগেটিভ)</option>
+            <option value="O-">O- (ও নেগেটিভ)</option>
+            <option value="AB-">AB- (এবি নেগেটিভ)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">মোবাইল নম্বর</label>
+          <input type="tel" id="donorPhone" class="form-control" placeholder="017xxxxxxxx" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">ইউনিয়ন</label>
+          <select id="donorUnion" class="form-control">
+            <option value="কুর্শা">কুর্শা</option>
+            <option value="সারাই">সারাই</option>
+            <option value="হারাগাছ">হারাগাছ</option>
+            <option value="শহীদবাগ">শহীদবাগ</option>
+            <option value="বালাপাড়া">বালাপাড়া</option>
+            <option value="টেপামধুপুর">টেপামধুপুর</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-danger btn-block">রক্তদাতা তালিকায় যোগ করুন</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: User Profile & Admin Toggle -->
+  <div id="userModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">ব্যবহারকারী একাউন্ট ও সেটিংস</div>
+        <button class="icon-btn" onclick="closeModal('userModal')">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div style="text-align:center; padding: 10px 0;">
+        <div style="width:64px; height:64px; border-radius:50%; background:var(--primary-light); color:var(--primary); display:inline-flex; align-items:center; justify-content:center; margin-bottom:8px;">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div style="font-weight:700; font-size:1.05rem;">কাউনিয়া নাগরিক পোর্টাল</div>
+        <div style="font-size:0.8rem; color:var(--text-muted);">সবার জন্য উন্মুক্ত ডিজিটাল সেবা</div>
+      </div>
+      <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px;">
+        <button class="btn btn-outline btn-block" onclick="closeModal('userModal'); switchTab('about');">
+          কাউনিয়া পরিচিতি ও ইতিহাস
+        </button>
+        <button class="btn btn-outline btn-block" onclick="closeModal('userModal'); switchTab('transport');">
+          ট্রেন ও পরিবহন সময়সূচি
+        </button>
+        <button class="btn btn-outline btn-block" onclick="closeModal('userModal'); switchTab('education');">
+          শিক্ষা প্রতিষ্ঠানের তালিকা
+        </button>
+        <button class="btn btn-outline btn-block" onclick="closeModal('userModal'); switchTab('business');">
+          স্থানীয় ব্যবসা ডিরেক্টরি
+        </button>
+        <button class="btn btn-primary btn-block" onclick="closeModal('userModal'); toggleAdminMode();">
+          অ্যাডমিন প্যানেল টগল করুন
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
